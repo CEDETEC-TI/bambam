@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BamBam — Consultora Informática | Formosa</title>
+<meta name="description" content="BamBam, consultora informática en Formosa: insumos, asesoramiento tecnológico y equipamiento para impresión de credenciales y carnets.">
+<meta name="theme-color" content="#0b1c2c">
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect width='32' height='32' rx='8' fill='%230b1c2c'/><text x='16' y='23' text-anchor='middle' font-family='Arial,sans-serif' font-weight='800' font-size='18' fill='%2314b8c9'>B</text></svg>">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+        --ink: #0b1c2c;
+        --ink-soft: #14283c;
+        --paper: #f4f7f9;
+        --panel: #ffffff;
+        --line: #e2e8ee;
+        --text: #1b2836;
+        --text-soft: #5b6b7c;
+        --cyan: #0fb7c4;
+        --cyan-dark: #0a8f99;
+        --amber: #ff9d2e;
+        --ok: #2f9e5b;
+    }
+
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Inter', sans-serif; background: var(--paper); color: var(--text); line-height: 1.6; overflow-x: hidden; }
+    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; color: var(--ink); line-height: 1.14; letter-spacing: -0.01em; }
+    a { color: inherit; text-decoration: none; }
+    img { display: block; max-width: 100%; }
+    ul { list-style: none; }
+    button { font-family: inherit; }
+    .container { max-width: 1180px; margin: 0 auto; padding: 0 32px; }
+    section[id] { scroll-margin-top: 84px; }
+
+    .eyebrow { font-family: 'Space Grotesk', sans-serif; text-transform: uppercase; letter-spacing: 2.5px; font-size: 0.74rem; font-weight: 600; color: var(--cyan-dark); display: inline-flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+    .eyebrow::before { content: ""; width: 24px; height: 2px; background: var(--cyan); }
+    .eyebrow.on-dark { color: #7fe3ea; }
+    .eyebrow.on-dark::before { background: #7fe3ea; }
+
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 9px; padding: 14px 26px; border-radius: 9px; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: 1px solid transparent; transition: all 0.2s ease; }
+    .btn-cyan { background: var(--cyan); color: #06282b; }
+    .btn-cyan:hover { background: var(--cyan-dark); color: #fff; }
+    .btn-outline { border-color: rgba(255,255,255,0.35); color: #fff; }
+    .btn-outline:hover { border-color: #fff; background: rgba(255,255,255,0.08); }
+    .btn-outline-ink { border-color: var(--line); color: var(--ink); background: var(--panel); }
+    .btn-outline-ink:hover { border-color: var(--cyan); color: var(--cyan-dark); }
+    .btn-wa { background: #25D366; color: #fff; }
+    .btn-wa:hover { background: #1fb355; }
+    .btn-sm { padding: 10px 18px; font-size: 0.82rem; }
+    .btn-block { width: 100%; }
+
+    /* ---------- NAV ---------- */
+    header { position: fixed; top: 0; left: 0; right: 0; z-index: 500; padding: 20px 0; transition: all 0.3s ease; }
+    header.scrolled { padding: 12px 0; background: rgba(11,28,44,0.96); backdrop-filter: blur(10px); box-shadow: 0 6px 24px rgba(0,0,0,0.18); }
+    nav.container { display: flex; align-items: center; justify-content: space-between; }
+    .logo { font-family: 'Space Grotesk', sans-serif; font-size: 1.32rem; font-weight: 700; color: #fff; letter-spacing: -0.01em; }
+    .logo span { color: var(--cyan); }
+    .nav-links { display: flex; gap: 28px; align-items: center; }
+    .nav-links a:not(.btn) { color: rgba(255,255,255,0.82); font-size: 0.85rem; font-weight: 600; transition: color 0.2s; }
+    .nav-links a:not(.btn):hover { color: var(--cyan); }
+    .burger { display: none; background: none; border: none; color: #fff; font-size: 1.5rem; cursor: pointer; }
+    .nav-links.open {
+        display: flex; position: fixed; top: 62px; left: 0; right: 0; bottom: 0;
+        background: rgba(11,28,44,0.98); flex-direction: column; padding: 28px; gap: 22px;
+        backdrop-filter: blur(10px); text-align: center; z-index: 499; overflow-y: auto;
+    }
+
+    /* ---------- HERO ---------- */
+    .hero { min-height: 94vh; display: flex; align-items: center; position: relative; background: var(--ink); color: #fff; overflow: hidden; }
+    .hero::before {
+        content: ""; position: absolute; inset: 0;
+        background: radial-gradient(circle at 18% 18%, rgba(15,183,196,0.32), transparent 45%),
+                    radial-gradient(circle at 88% 78%, rgba(255,157,46,0.16), transparent 45%);
+    }
+    .hero-grid { position: relative; z-index: 1; display: grid; grid-template-columns: 1.05fr 0.95fr; gap: 48px; align-items: center; padding-top: 88px; }
+    .hero h1 { font-size: clamp(2.15rem, 4.4vw, 3.3rem); color: #fff; margin-bottom: 20px; }
+    .hero h1 em { font-style: normal; color: var(--cyan); }
+    .hero p.lead { font-size: 1.05rem; color: rgba(255,255,255,0.74); max-width: 480px; margin-bottom: 30px; }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .hero-visual { position: relative; }
+    .hv-frame { position: relative; background: linear-gradient(155deg, #12314a, #0b1c2c); border: 1px solid rgba(255,255,255,0.12); border-radius: 18px; padding: 28px; box-shadow: 0 30px 70px rgba(0,0,0,0.4); }
+    .hv-frame img { width: 100%; border-radius: 10px; background: #fff; }
+    .hv-tag { position: absolute; display: flex; align-items: center; gap: 8px; background: rgba(11,28,44,0.92); border: 1px solid rgba(255,255,255,0.16); padding: 9px 14px; border-radius: 980px; font-size: 0.76rem; font-weight: 600; color: #fff; box-shadow: 0 14px 30px rgba(0,0,0,0.35); }
+    .hv-tag i { color: var(--cyan); }
+    .hv-tag.t1 { top: -14px; left: -18px; }
+    .hv-tag.t2 { bottom: 26px; right: -22px; }
+
+    .strip { background: var(--ink-soft); color: rgba(255,255,255,0.82); padding: 18px 0; position: relative; z-index: 1; }
+    .strip .container { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 14px; font-size: 0.82rem; }
+    .strip .item { display: flex; align-items: center; gap: 10px; }
+    .strip i { color: var(--cyan); }
+
+    /* ---------- SECTION BASE ---------- */
+    section { padding: 92px 0; }
+    .section-head { max-width: 640px; margin-bottom: 44px; }
+    .section-head.center { margin-left: auto; margin-right: auto; text-align: center; }
+    .section-head h2 { font-size: clamp(1.9rem, 3.8vw, 2.5rem); margin-bottom: 12px; }
+    .section-head p { color: var(--text-soft); font-size: 1rem; }
+
+    /* ---------- SERVICIOS ---------- */
+    .services { background: var(--panel); }
+    .service-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; }
+    .service-card { border: 1px solid var(--line); border-radius: 14px; padding: 28px 24px; background: var(--paper); transition: all 0.2s ease; }
+    .service-card:hover { border-color: var(--cyan); transform: translateY(-3px); }
+    .service-card.featured { background: var(--ink); border-color: var(--ink); }
+    .service-card i { font-size: 1.35rem; color: var(--cyan-dark); margin-bottom: 14px; display: block; }
+    .service-card.featured i { color: var(--cyan); }
+    .service-card h3 { font-size: 1rem; margin-bottom: 8px; }
+    .service-card.featured h3 { color: #fff; }
+    .service-card p { color: var(--text-soft); font-size: 0.86rem; }
+    .service-card.featured p { color: rgba(255,255,255,0.68); }
+    .service-card .sc-link { display: inline-flex; align-items: center; gap: 6px; margin-top: 14px; font-size: 0.8rem; font-weight: 700; color: var(--cyan-dark); }
+    .service-card.featured .sc-link { color: var(--cyan); }
+
+    /* ---------- IMPRESORAS ---------- */
+    .printers { background: var(--paper); }
+    .printers-note { max-width: 640px; color: var(--text-soft); font-size: 0.92rem; margin-top: -22px; margin-bottom: 40px; }
+
+    .p-filters { display: inline-flex; background: var(--panel); border: 1px solid var(--line); padding: 5px; border-radius: 980px; gap: 2px; margin-bottom: 32px; }
+    .p-filter { border: 0; background: transparent; padding: 10px 20px; border-radius: 980px; font-size: 0.84rem; font-weight: 600; color: var(--text-soft); cursor: pointer; transition: all 0.2s ease; }
+    .p-filter:hover { color: var(--ink); }
+    .p-filter.active { background: var(--ink); color: #fff; }
+
+    .printer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .printer-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.2s ease; }
+    .printer-card:hover { border-color: var(--cyan); box-shadow: 0 18px 40px rgba(11,28,44,0.08); transform: translateY(-3px); }
+    .printer-photo { aspect-ratio: 1 / 1; background: #fff; padding: 22px; border-bottom: 1px solid var(--line); position: relative; }
+    .printer-photo img { width: 100%; height: 100%; object-fit: contain; }
+    .printer-badge { position: absolute; top: 14px; left: 14px; background: var(--ink); color: #fff; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.4px; padding: 5px 11px; border-radius: 980px; }
+    .printer-body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
+    .printer-brand { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--cyan-dark); }
+    .printer-name { font-size: 1.14rem; margin-bottom: 6px; }
+    .printer-desc { color: var(--text-soft); font-size: 0.87rem; margin-bottom: 16px; flex: 1; }
+    .printer-specs { display: grid; gap: 9px; margin-bottom: 18px; border-top: 1px solid var(--line); padding-top: 16px; }
+    .printer-specs li { display: flex; gap: 10px; align-items: flex-start; font-size: 0.82rem; }
+    .printer-specs i { color: var(--cyan-dark); width: 16px; flex-shrink: 0; margin-top: 2px; text-align: center; }
+    .printer-specs b { font-weight: 600; color: var(--ink); }
+
+    /* ---------- NOSOTROS ---------- */
+    .about { background: var(--panel); }
+    .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; align-items: center; }
+    .about-list { display: grid; gap: 18px; margin-top: 26px; }
+    .about-list li { display: flex; gap: 14px; align-items: flex-start; font-size: 0.94rem; }
+    .about-list i { color: var(--cyan-dark); font-size: 1.05rem; margin-top: 3px; }
+    .about-card { background: var(--ink); border-radius: 18px; padding: 36px; color: #fff; }
+    .about-card .num { font-family: 'Space Grotesk', sans-serif; font-size: 2.6rem; font-weight: 700; color: var(--cyan); }
+    .about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; margin-top: 10px; }
+    .about-stats .label { font-size: 0.8rem; color: rgba(255,255,255,0.65); margin-top: 4px; }
+
+    /* ---------- CONTACTO ---------- */
+    .contact { background: var(--ink); color: #fff; }
+    .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 56px; }
+    .contact h2 { color: #fff; }
+    .contact .section-head p { color: rgba(255,255,255,0.68); }
+    .contact-rows { display: grid; gap: 4px; margin-top: 30px; }
+    .contact-row { display: flex; gap: 16px; padding: 16px 0; border-top: 1px solid rgba(255,255,255,0.12); }
+    .contact-row:last-child { border-bottom: 1px solid rgba(255,255,255,0.12); }
+    .contact-row i { color: var(--cyan); font-size: 1.05rem; margin-top: 2px; width: 20px; }
+    .contact-row h4 { font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.6px; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+    .contact-row a, .contact-row p { font-size: 0.98rem; font-weight: 500; }
+    .contact-panel { background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.14); border-radius: 18px; padding: 34px; }
+    .contact-panel h3 { color: #fff; font-size: 1.3rem; margin-bottom: 10px; }
+    .contact-panel p { color: rgba(255,255,255,0.68); font-size: 0.92rem; margin-bottom: 22px; }
+    .contact-panel .btn { width: 100%; margin-bottom: 12px; }
+
+    /* ---------- FOOTER ---------- */
+    footer { background: #081422; color: rgba(244,247,249,0.5); padding: 34px 0 22px; border-top: 1px solid rgba(255,255,255,0.08); }
+    .footer-bottom { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 12px; font-size: 0.78rem; }
+    .footer-bottom a { color: var(--cyan); }
+    .footer-bottom a:hover { text-decoration: underline; }
+
+    /* ---------- WHATSAPP FLOAT ---------- */
+    .wa-float { position: fixed; bottom: 26px; right: 26px; z-index: 400; width: 58px; height: 58px; border-radius: 50%; background: #25D366; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; box-shadow: 0 12px 28px rgba(0,0,0,0.28); animation: floatpulse 2.6s ease-in-out infinite; }
+    @keyframes floatpulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+
+    /* ---------- RESPONSIVE ---------- */
+    @media (max-width: 980px) {
+        .hero-grid, .about-grid, .contact-grid { grid-template-columns: 1fr; }
+        .hero-visual { max-width: 460px; margin: 0 auto; }
+        .service-grid { grid-template-columns: 1fr 1fr; }
+        .printer-grid { grid-template-columns: 1fr 1fr; }
+        .nav-links { display: none; }
+        .burger { display: block; }
+    }
+    @media (max-width: 640px) {
+        .container { padding: 0 20px; }
+        section { padding: 64px 0; }
+        .hero { min-height: auto; padding-bottom: 50px; }
+        .hero-grid { padding-top: 76px; gap: 34px; }
+        .strip .container { flex-direction: column; align-items: flex-start; gap: 10px; }
+        .service-grid, .printer-grid { grid-template-columns: 1fr; }
+        .about-stats { grid-template-columns: 1fr 1fr; }
+        .hv-tag.t2 { right: 0; bottom: 16px; }
+        .hv-tag.t1 { left: 0; }
+        .footer-bottom { flex-direction: column; }
+        .p-filters { display: flex; width: 100%; overflow-x: auto; }
+    }
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+    <nav class="container">
+        <a href="#inicio" class="logo">Bam<span>Bam</span></a>
+        <div class="nav-links" id="navLinks">
+            <a href="#servicios">Servicios</a>
+            <a href="#impresoras">Impresoras</a>
+            <a href="#nosotros">Nosotros</a>
+            <a href="#contacto">Contacto</a>
+            <a href="https://wa.me/5493704111222?text=Hola%20BamBam%2C%20quiero%20hacer%20una%20consulta" target="_blank" class="btn btn-cyan btn-sm"><i class="fa-brands fa-whatsapp"></i> Escribinos</a>
+        </div>
+        <button class="burger" id="burgerBtn" aria-label="Abrir menú"><i class="fa-solid fa-bars"></i></button>
+    </nav>
+</header>
+
+<section class="hero" id="inicio">
+    <div class="container hero-grid">
+        <div class="hero-content">
+            <span class="eyebrow on-dark">Consultora informática · Formosa</span>
+            <h1>Insumos, asesoría y <em>equipamiento para credenciales</em>, todo en un mismo lugar.</h1>
+            <p class="lead">En BamBam vendemos insumos informáticos, asesoramos a empresas en su tecnología y somos especialistas en impresoras para carnets y credenciales.</p>
+            <div class="hero-actions">
+                <a href="#impresoras" class="btn btn-cyan"><i class="fa-solid fa-id-card"></i> Ver impresoras</a>
+                <a href="https://wa.me/5493704111222?text=Hola%20BamBam%2C%20quiero%20hacer%20una%20consulta" target="_blank" class="btn btn-outline"><i class="fa-brands fa-whatsapp"></i> Consultar ahora</a>
+            </div>
+        </div>
+        <div class="hero-visual">
+            <div class="hv-frame">
+                <img src="img/dtc1500.jpg" alt="Impresora de credenciales Fargo DTC1500">
+            </div>
+            <div class="hv-tag t1"><i class="fa-solid fa-bolt"></i> Entrega en 24 a 72 hs</div>
+            <div class="hv-tag t2"><i class="fa-solid fa-headset"></i> Asesoramiento incluido</div>
+        </div>
+    </div>
+</section>
+
+<div class="strip">
+    <div class="container">
+        <div class="item"><i class="fa-solid fa-boxes-stacked"></i> Insumos informáticos con stock real</div>
+        <div class="item"><i class="fa-solid fa-id-card-clip"></i> Especialistas en impresión de credenciales</div>
+        <div class="item"><i class="fa-solid fa-comments"></i> Atención directa por WhatsApp</div>
+    </div>
+</div>
+
+<section class="services" id="servicios">
+    <div class="container">
+        <div class="section-head center">
+            <span class="eyebrow">Servicios</span>
+            <h2>Lo que hacemos</h2>
+            <p>Cuatro áreas para que tu empresa tenga la tecnología resuelta, con foco especial en impresión de credenciales.</p>
+        </div>
+        <div class="service-grid">
+            <div class="service-card"><i class="fa-solid fa-boxes-stacked"></i><h3>Insumos informáticos</h3><p>Cables, tóners, cintas, tarjetas PVC y componentes, con stock disponible para entrega rápida.</p></div>
+            <div class="service-card featured"><i class="fa-solid fa-id-card-clip"></i><h3>Impresión de credenciales</h3><p>Venta e instalación de impresoras para carnets, con insumos y soporte técnico incluido.</p><a href="#impresoras" class="sc-link">Ver impresoras <i class="fa-solid fa-arrow-right"></i></a></div>
+            <div class="service-card"><i class="fa-solid fa-lightbulb"></i><h3>Asesoría tecnológica</h3><p>Te ayudamos a elegir el equipo y la solución digital correcta para tu negocio, sin venderte de más.</p></div>
+            <div class="service-card"><i class="fa-solid fa-screwdriver-wrench"></i><h3>Soporte técnico</h3><p>Instalación, configuración y mantenimiento de los equipos que vendemos, con seguimiento post-venta.</p></div>
+        </div>
+    </div>
+</section>
+
+<section class="printers" id="impresoras">
+    <div class="container">
+        <div class="section-head">
+            <span class="eyebrow">Impresoras de credenciales</span>
+            <h2>Equipos para emitir tus propios carnets</h2>
+            <p>Trabajamos con las marcas líderes en impresión de tarjetas: Entrust, HID Fargo, Zebra e IDSHOP. Elegimos con vos el equipo según el volumen y el tipo de credencial que necesites.</p>
+        </div>
+        <p class="printers-note">Los precios se cotizan según disponibilidad e importación. Escribinos con el modelo que te interesa y te respondemos con el valor actualizado.</p>
+
+        <div class="p-filters" id="pFilters">
+            <button class="p-filter active" data-f="todas">Todas</button>
+            <button class="p-filter" data-f="simple">Simple cara</button>
+            <button class="p-filter" data-f="doble">Doble cara disponible</button>
+        </div>
+
+        <div class="printer-grid" id="printerGrid"></div>
+    </div>
+</section>
+
+<section class="about" id="nosotros">
+    <div class="container about-grid">
+        <div>
+            <span class="eyebrow">Nosotros</span>
+            <h2>Una consultora pensada para negocios de Formosa</h2>
+            <p style="color:var(--text-soft); margin-top:12px;">BamBam nace para que las empresas de la región tengan cerca los insumos y el equipamiento que antes solo se conseguían pidiendo a otras provincias, con asesoramiento real y sin vueltas.</p>
+            <ul class="about-list">
+                <li><i class="fa-solid fa-check"></i> Stock propio de insumos y repuestos habituales.</li>
+                <li><i class="fa-solid fa-check"></i> Asesoramos antes de vender: te decimos qué equipo te conviene.</li>
+                <li><i class="fa-solid fa-check"></i> Soporte técnico local, sin depender de un service a distancia.</li>
+            </ul>
+        </div>
+        <div class="about-card">
+            <div class="about-stats">
+                <div><div class="num">4</div><div class="label">áreas de servicio</div></div>
+                <div><div class="num">5</div><div class="label">modelos de impresoras en catálogo</div></div>
+                <div><div class="num">24-72h</div><div class="label">de entrega según equipo</div></div>
+                <div><div class="num">100%</div><div class="label">asesoramiento antes de comprar</div></div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="contact" id="contacto">
+    <div class="container contact-grid">
+        <div>
+            <div class="section-head">
+                <span class="eyebrow on-dark">Contacto</span>
+                <h2>Hablemos de tu proyecto</h2>
+                <p>Contanos qué necesitás y te respondemos con precio y disponibilidad.</p>
+            </div>
+            <div class="contact-rows">
+                <div class="contact-row"><i class="fa-solid fa-location-dot"></i><div><h4>Dirección</h4><p>Mitre 740, Formosa Capital, Argentina</p></div></div>
+                <div class="contact-row"><i class="fa-brands fa-whatsapp"></i><div><h4>WhatsApp</h4><a href="https://wa.me/5493704111222" target="_blank">+54 9 3704 11-1222</a></div></div>
+                <div class="contact-row"><i class="fa-solid fa-envelope"></i><div><h4>Email</h4><a href="mailto:ventas@bambaminformatica.com.ar">ventas@bambaminformatica.com.ar</a></div></div>
+                <div class="contact-row"><i class="fa-brands fa-instagram"></i><div><h4>Instagram</h4><a href="#" target="_blank">@bambam.informatica</a></div></div>
+                <div class="contact-row"><i class="fa-solid fa-clock"></i><div><h4>Horario</h4><p>Lunes a viernes, 8 a 12:30 y 16 a 20 hs</p></div></div>
+            </div>
+        </div>
+        <div class="contact-panel">
+            <h3>¿Ya sabés qué impresora necesitás?</h3>
+            <p>Escribinos por WhatsApp con el modelo y te confirmamos precio, stock y tiempo de entrega.</p>
+            <a href="https://wa.me/5493704111222?text=Hola%20BamBam%2C%20quiero%20consultar%20por%20una%20impresora%20de%20credenciales" target="_blank" class="btn btn-wa btn-block"><i class="fa-brands fa-whatsapp"></i> Consultar por WhatsApp</a>
+            <a href="mailto:ventas@bambaminformatica.com.ar" class="btn btn-outline-ink btn-block"><i class="fa-solid fa-envelope"></i> Escribir un email</a>
+        </div>
+    </div>
+</section>
+
+<footer>
+    <div class="container footer-bottom">
+        <span>© 2026 BamBam Consultora Informática · Formosa, Argentina.</span>
+        <span><a href="https://wa.me/5493704111222" target="_blank">WhatsApp</a> · <a href="#" target="_blank">Instagram</a></span>
+    </div>
+</footer>
+
+<a href="https://wa.me/5493704111222?text=Hola%20BamBam%2C%20quiero%20hacer%20una%20consulta" target="_blank" class="wa-float" aria-label="Consultar por WhatsApp">
+    <i class="fa-brands fa-whatsapp"></i>
+</a>
+
+<script>
+/* =========================================================
+   DATOS: CATÁLOGO DE IMPRESORAS
+   ========================================================= */
+const PRINTERS = [
+    {
+        id: 'sigma-sl1',
+        brand: 'Entrust',
+        name: 'Sigma SL1',
+        img: 'img/sigma-sl1.jpg',
+        sides: ['simple'],
+        badge: 'Simple cara',
+        desc: 'Impresora de credenciales de un lado, con panel de estado y gestión desde el celular. Ideal para carnets de socios, accesos y credenciales corporativas.',
+        specs: [
+            { icon: 'fa-gauge-high', label: 'Velocidad', value: '175 tarjetas/hora en color · 660 en monocromo' },
+            { icon: 'fa-image', label: 'Resolución', value: '300 x 1200 dpi, sublimación de tinta' },
+            { icon: 'fa-plug', label: 'Conexión', value: 'USB, con actualización a Wi-Fi opcional' },
+        ],
+    },
+    {
+        id: 'dtc1500',
+        brand: 'HID Fargo',
+        name: 'DTC1500',
+        img: 'img/dtc1500.jpg',
+        sides: ['simple', 'doble'],
+        badge: 'Simple y doble cara',
+        desc: 'Impresora modular de HID Fargo con marca de agua de seguridad integrada, pensada para escuelas, organismos públicos y empresas en crecimiento.',
+        specs: [
+            { icon: 'fa-gauge-high', label: 'Velocidad', value: '225 tarjetas/hora a una cara · 150 a doble cara' },
+            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
+            { icon: 'fa-layer-group', label: 'Capacidad', value: '100 tarjetas de entrada y 100 de salida' },
+            { icon: 'fa-plug', label: 'Conexión', value: 'USB, con Ethernet opcional' },
+        ],
+    },
+    {
+        id: 'zc100',
+        brand: 'Zebra',
+        name: 'ZC100',
+        img: 'img/zc100.jpg',
+        sides: ['simple'],
+        badge: 'Simple cara',
+        desc: 'Impresora compacta de un lado, con alimentador que se ajusta solo al grosor de cada tarjeta. Una opción accesible para empezar a emitir credenciales propias.',
+        specs: [
+            { icon: 'fa-gauge-high', label: 'Velocidad', value: '150 tarjetas/hora en color · 700 en monocromo' },
+            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
+            { icon: 'fa-layer-group', label: 'Capacidad', value: '100 tarjetas de entrada y 100 de salida' },
+            { icon: 'fa-plug', label: 'Conexión', value: 'USB 2.0, con Ethernet 10/100 opcional' },
+        ],
+    },
+    {
+        id: 'zc300',
+        brand: 'Zebra',
+        name: 'ZC300',
+        img: 'img/zc300.jpg',
+        sides: ['simple', 'doble'],
+        badge: 'Simple y doble cara',
+        desc: 'El perfil más delgado de su categoría, disponible a una o dos caras. Lista para usar apenas se conecta, sin configuración compleja.',
+        specs: [
+            { icon: 'fa-gauge-high', label: 'Velocidad', value: 'Hasta 200 tarjetas/hora en color · 900 en monocromo' },
+            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
+            { icon: 'fa-layer-group', label: 'Capacidad', value: '100 tarjetas de entrada y 100 de salida' },
+            { icon: 'fa-plug', label: 'Conexión', value: 'USB 2.0 + Ethernet, con Wi-Fi opcional' },
+        ],
+    },
+    {
+        id: 's26',
+        brand: 'IDSHOP',
+        name: 'DTC S26 SS',
+        img: 'img/s26.jpg',
+        sides: ['simple'],
+        badge: 'Simple cara',
+        desc: 'Impresora de un lado con diseño liviano y el software iCarde incluido, para diseñar y emitir credenciales sin instalar nada más.',
+        specs: [
+            { icon: 'fa-gauge-high', label: 'Velocidad', value: 'Hasta 180 tarjetas/hora' },
+            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
+            { icon: 'fa-plug', label: 'Conexión', value: 'USB, con Ethernet opcional' },
+        ],
+    },
+];
+
+/* =========================================================
+   RENDER: CATÁLOGO
+   ========================================================= */
+function renderPrinters(filter = 'todas') {
+    const list = filter === 'todas' ? PRINTERS : PRINTERS.filter(p => p.sides.includes(filter));
+    document.getElementById('printerGrid').innerHTML = list.map(p => `
+        <article class="printer-card">
+            <div class="printer-photo">
+                <span class="printer-badge">${p.badge}</span>
+                <img src="${p.img}" alt="Impresora de credenciales ${p.brand} ${p.name}" loading="lazy">
+            </div>
+            <div class="printer-body">
+                <span class="printer-brand">${p.brand}</span>
+                <h3 class="printer-name">${p.name}</h3>
+                <p class="printer-desc">${p.desc}</p>
+                <ul class="printer-specs">
+                    ${p.specs.map(s => `<li><i class="fa-solid ${s.icon}"></i><span><b>${s.label}:</b> ${s.value}</span></li>`).join('')}
+                </ul>
+                <a class="btn btn-wa btn-block btn-sm" href="https://wa.me/5493704111222?text=${encodeURIComponent('Hola BamBam, quiero consultar precio y stock de la impresora ' + p.brand + ' ' + p.name)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Consultar esta impresora</a>
+            </div>
+        </article>
+    `).join('');
+}
+
+document.getElementById('pFilters').addEventListener('click', (e) => {
+    const btn = e.target.closest('.p-filter');
+    if (!btn) return;
+    document.querySelectorAll('.p-filter').forEach(b => b.classList.toggle('active', b === btn));
+    renderPrinters(btn.dataset.f);
+});
+
+/* =========================================================
+   HEADER + BURGER
+   ========================================================= */
+const header = document.getElementById('siteHeader');
+window.addEventListener('scroll', () => header.classList.toggle('scrolled', window.scrollY > 40));
+
+const burger = document.getElementById('burgerBtn');
+const navLinks = document.getElementById('navLinks');
+burger.addEventListener('click', () => navLinks.classList.toggle('open'));
+navLinks.querySelectorAll('a').forEach(a => a.addEventListener('click', () => navLinks.classList.remove('open')));
+
+/* =========================================================
+   INIT
+   ========================================================= */
+renderPrinters();
+</script>
+
+</body>
+</html>
