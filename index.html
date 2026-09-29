@@ -128,11 +128,16 @@
     .p-filter.active { background: var(--ink); color: #fff; }
 
     .printer-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
-    .printer-card { background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; display: flex; flex-direction: column; transition: all 0.2s ease; }
+    .printer-card { display: block; background: var(--panel); border: 1px solid var(--line); border-radius: 16px; overflow: hidden; transition: all 0.2s ease; }
     .printer-card:hover { border-color: var(--cyan); box-shadow: 0 18px 40px rgba(11,28,44,0.08); transform: translateY(-3px); }
     .printer-photo { aspect-ratio: 1 / 1; background: #fff; padding: 22px; border-bottom: 1px solid var(--line); position: relative; }
     .printer-photo img { width: 100%; height: 100%; object-fit: contain; }
     .printer-badge { position: absolute; top: 14px; left: 14px; background: var(--ink); color: #fff; font-size: 0.68rem; font-weight: 700; letter-spacing: 0.4px; padding: 5px 11px; border-radius: 980px; }
+    .printer-gallery-hint { position: absolute; bottom: 14px; right: 14px; background: rgba(11,28,44,0.85); color: #fff; font-size: 0.68rem; font-weight: 600; padding: 5px 10px; border-radius: 980px; display: flex; align-items: center; gap: 6px; }
+    .printer-cta { display: inline-flex; align-items: center; gap: 8px; margin-top: auto; padding-top: 4px; font-size: 0.86rem; font-weight: 700; color: var(--cyan-dark); }
+    .printer-card:hover .printer-cta { color: var(--ink); }
+    .printer-cta i { transition: transform 0.2s ease; }
+    .printer-card:hover .printer-cta i { transform: translateX(3px); }
     .printer-body { padding: 22px 22px 24px; display: flex; flex-direction: column; gap: 4px; flex: 1; }
     .printer-brand { font-size: 0.72rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; color: var(--cyan-dark); }
     .printer-name { font-size: 1.14rem; margin-bottom: 6px; }
@@ -232,9 +237,8 @@
         </div>
         <div class="hero-visual">
             <div class="hv-frame">
-                <img src="img/dtc1500.jpg" alt="Impresora de credenciales Fargo DTC1500">
+                <img src="img/dtc1500-1.jpg" alt="Impresora de credenciales Fargo DTC1500">
             </div>
-            <div class="hv-tag t1"><i class="fa-solid fa-bolt"></i> Entrega en 24 a 72 hs</div>
             <div class="hv-tag t2"><i class="fa-solid fa-headset"></i> Asesoramiento incluido</div>
         </div>
     </div>
@@ -342,96 +346,20 @@
     <i class="fa-brands fa-whatsapp"></i>
 </a>
 
+<script src="bambam-data.js"></script>
 <script>
 /* =========================================================
-   DATOS: CATÁLOGO DE IMPRESORAS
-   ========================================================= */
-const PRINTERS = [
-    {
-        id: 'sigma-sl1',
-        brand: 'Entrust',
-        name: 'Sigma SL1',
-        img: 'img/sigma-sl1.jpg',
-        sides: ['simple'],
-        badge: 'Simple cara',
-        desc: 'Impresora de credenciales de un lado, con panel de estado y gestión desde el celular. Ideal para carnets de socios, accesos y credenciales corporativas.',
-        specs: [
-            { icon: 'fa-gauge-high', label: 'Velocidad', value: '175 tarjetas/hora en color · 660 en monocromo' },
-            { icon: 'fa-image', label: 'Resolución', value: '300 x 1200 dpi, sublimación de tinta' },
-            { icon: 'fa-plug', label: 'Conexión', value: 'USB, con actualización a Wi-Fi opcional' },
-        ],
-    },
-    {
-        id: 'dtc1500',
-        brand: 'HID Fargo',
-        name: 'DTC1500',
-        img: 'img/dtc1500.jpg',
-        sides: ['simple', 'doble'],
-        badge: 'Simple y doble cara',
-        desc: 'Impresora modular de HID Fargo con marca de agua de seguridad integrada, pensada para escuelas, organismos públicos y empresas en crecimiento.',
-        specs: [
-            { icon: 'fa-gauge-high', label: 'Velocidad', value: '225 tarjetas/hora a una cara · 150 a doble cara' },
-            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
-            { icon: 'fa-layer-group', label: 'Capacidad', value: '100 tarjetas de entrada y 100 de salida' },
-            { icon: 'fa-plug', label: 'Conexión', value: 'USB, con Ethernet opcional' },
-        ],
-    },
-    {
-        id: 'zc100',
-        brand: 'Zebra',
-        name: 'ZC100',
-        img: 'img/zc100.jpg',
-        sides: ['simple'],
-        badge: 'Simple cara',
-        desc: 'Impresora compacta de un lado, con alimentador que se ajusta solo al grosor de cada tarjeta. Una opción accesible para empezar a emitir credenciales propias.',
-        specs: [
-            { icon: 'fa-gauge-high', label: 'Velocidad', value: '150 tarjetas/hora en color · 700 en monocromo' },
-            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
-            { icon: 'fa-layer-group', label: 'Capacidad', value: '100 tarjetas de entrada y 100 de salida' },
-            { icon: 'fa-plug', label: 'Conexión', value: 'USB 2.0, con Ethernet 10/100 opcional' },
-        ],
-    },
-    {
-        id: 'zc300',
-        brand: 'Zebra',
-        name: 'ZC300',
-        img: 'img/zc300.jpg',
-        sides: ['simple', 'doble'],
-        badge: 'Simple y doble cara',
-        desc: 'El perfil más delgado de su categoría, disponible a una o dos caras. Lista para usar apenas se conecta, sin configuración compleja.',
-        specs: [
-            { icon: 'fa-gauge-high', label: 'Velocidad', value: 'Hasta 200 tarjetas/hora en color · 900 en monocromo' },
-            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
-            { icon: 'fa-layer-group', label: 'Capacidad', value: '100 tarjetas de entrada y 100 de salida' },
-            { icon: 'fa-plug', label: 'Conexión', value: 'USB 2.0 + Ethernet, con Wi-Fi opcional' },
-        ],
-    },
-    {
-        id: 's26',
-        brand: 'IDSHOP',
-        name: 'DTC S26 SS',
-        img: 'img/s26.jpg',
-        sides: ['simple'],
-        badge: 'Simple cara',
-        desc: 'Impresora de un lado con diseño liviano y el software iCarde incluido, para diseñar y emitir credenciales sin instalar nada más.',
-        specs: [
-            { icon: 'fa-gauge-high', label: 'Velocidad', value: 'Hasta 180 tarjetas/hora' },
-            { icon: 'fa-image', label: 'Resolución', value: '300 dpi' },
-            { icon: 'fa-plug', label: 'Conexión', value: 'USB, con Ethernet opcional' },
-        ],
-    },
-];
-
-/* =========================================================
    RENDER: CATÁLOGO
+   (los datos de las impresoras viven en bambam-data.js, compartidos con impresora.html)
    ========================================================= */
 function renderPrinters(filter = 'todas') {
     const list = filter === 'todas' ? PRINTERS : PRINTERS.filter(p => p.sides.includes(filter));
     document.getElementById('printerGrid').innerHTML = list.map(p => `
-        <article class="printer-card">
+        <a class="printer-card" href="impresora.html?id=${p.id}">
             <div class="printer-photo">
                 <span class="printer-badge">${p.badge}</span>
-                <img src="${p.img}" alt="Impresora de credenciales ${p.brand} ${p.name}" loading="lazy">
+                ${p.images.length > 1 ? `<span class="printer-gallery-hint"><i class="fa-solid fa-images"></i> ${p.images.length} fotos</span>` : ''}
+                <img src="${p.images[0]}" alt="Impresora de credenciales ${p.brand} ${p.name}" loading="lazy">
             </div>
             <div class="printer-body">
                 <span class="printer-brand">${p.brand}</span>
@@ -440,9 +368,9 @@ function renderPrinters(filter = 'todas') {
                 <ul class="printer-specs">
                     ${p.specs.map(s => `<li><i class="fa-solid ${s.icon}"></i><span><b>${s.label}:</b> ${s.value}</span></li>`).join('')}
                 </ul>
-                <a class="btn btn-wa btn-block btn-sm" href="https://wa.me/5493704824319?text=${encodeURIComponent('Hola BamBam, quiero consultar precio y stock de la impresora ' + p.brand + ' ' + p.name)}" target="_blank" rel="noopener"><i class="fa-brands fa-whatsapp"></i> Consultar esta impresora</a>
+                <span class="printer-cta">Ver ficha completa <i class="fa-solid fa-arrow-right"></i></span>
             </div>
-        </article>
+        </a>
     `).join('');
 }
 
