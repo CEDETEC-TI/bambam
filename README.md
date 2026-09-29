@@ -10,7 +10,7 @@ Sitio estático sin dependencias de build ni backend (`index.html`, `impresora.h
 
 - Servicios generales de la consultora (insumos, asesoría, soporte técnico) y una sección destacada de impresión de credenciales.
 - **Sección de impresoras**: catálogo con 5 modelos reales de impresoras de credenciales (Entrust Sigma SL1, HID Fargo DTC1500, Zebra ZC100, Zebra ZC300 e IDSHOP DTC S26 SS), con foto real de cada equipo y filtro por simple/doble cara. Cada tarjeta lleva a `impresora.html?id=<modelo>`, una ficha con galería de fotos (varias imágenes en los modelos que las tienen disponibles: ZC100, ZC300 y S26 SS), especificaciones completas y botón de WhatsApp con la consulta pre-armada. Los datos del catálogo viven en `bambam-data.js`, compartido entre `index.html` e `impresora.html`.
-- Sección "Nosotros" con estadísticas de la consultora y sección de contacto (dirección, WhatsApp, email, Instagram, horario).
+- Sección "Nosotros" con estadísticas de la consultora y sección de contacto (dirección y WhatsApp).
 
 ### Sobre las impresoras
 
